@@ -1,0 +1,19 @@
+# ymusic-landing
+
+Лендинг расширения «Яндекс.Музыка — управление плеером» для Chrome.
+Статичная страница на чистом HTML/CSS, публикуется через GitHub Pages по
+адресу [ymusic.bbird.ru](https://ymusic.bbird.ru).
+
+Исходники самого расширения — в [ymusic-new](https://github.com/bbird1980/ymusic-new).
+
+## Структура
+
+- `index.html` — вся страница (разметка, стили, минимум JS для анимации появления секций)
+- `assets/screenshots/` — скриншоты и промо-картинки из карточки Chrome Web Store
+- `assets/icon-128.png` — иконка расширения
+- `CNAME` — кастомный домен для GitHub Pages
+
+## Правка
+
+Файл один, правки — прямо в `index.html`. Локально открывается просто
+двойным кликом или `python3 -m http.server` в этой папке.
