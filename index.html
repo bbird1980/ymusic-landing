@@ -12,492 +12,268 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Manrope:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#faf6ee;
-    --panel:#f1ebdc;
-    --panel-2:#e7dfca;
     --ink:#211c14;
     --muted:#6b6151;
     --line:#ddd3ba;
     --spark:#c98600;
     --spark-ink:#141210;
-    --spark-glow:rgba(201,134,0,.18);
-    --radius-l:28px;
-    --radius-m:18px;
-    --radius-s:10px;
-    --maxw:1120px;
+    --spark-glow:rgba(201,134,0,.22);
+    --stage:#0c0a08;
     color-scheme:light dark;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       --paper:#141210;
-      --panel:#1e1a15;
-      --panel-2:#272119;
       --ink:#f4eee0;
       --muted:#a89d88;
       --line:#332c22;
       --spark:#f5df00;
       --spark-ink:#1a1710;
-      --spark-glow:rgba(245,223,0,.16);
+      --spark-glow:rgba(245,223,0,.2);
     }
   }
   :root[data-theme="dark"]{
     --paper:#141210;
-    --panel:#1e1a15;
-    --panel-2:#272119;
     --ink:#f4eee0;
     --muted:#a89d88;
     --line:#332c22;
     --spark:#f5df00;
     --spark-ink:#1a1710;
-    --spark-glow:rgba(245,223,0,.16);
+    --spark-glow:rgba(245,223,0,.2);
   }
 
   *{box-sizing:border-box;}
-  html{-webkit-text-size-adjust:100%;}
+  html,body{height:100%;}
   body{
     margin:0;
     background:var(--paper);
     color:var(--ink);
     font-family:'Manrope',system-ui,'Segoe UI',sans-serif;
-    font-size:17px;
-    line-height:1.55;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3,.display{
-    font-family:'Unbounded','Manrope',system-ui,sans-serif;
-    font-weight:700;
-    letter-spacing:-.01em;
-    text-wrap:balance;
-    margin:0;
-  }
-  code,.mono{
-    font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;
-  }
-  a{color:inherit;}
   img{max-width:100%;display:block;}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
-  section{position:relative;}
+  a{color:inherit;}
 
   /* ---------- header ---------- */
   header.site{
-    position:sticky;top:0;z-index:20;
-    background:color-mix(in srgb, var(--paper) 86%, transparent);
-    backdrop-filter:blur(10px);
+    flex:none;
+    min-height:60px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;
+    padding:10px 22px;
     border-bottom:1px solid var(--line);
+    background:var(--paper);
+    z-index:5;
   }
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--maxw);margin:0 auto;}
-  .brand{display:flex;align-items:center;gap:10px;font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;letter-spacing:.02em;text-decoration:none;}
-  .brand svg{width:20px;height:20px;color:var(--spark);}
-  .nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted);}
-  .nav-links a{text-decoration:none;transition:color .15s;}
-  .nav-links a:hover{color:var(--ink);}
-  .nav .cta-small{
-    display:inline-flex;align-items:center;gap:6px;
-    background:var(--ink);color:var(--paper);
-    padding:9px 16px;border-radius:99px;font-size:13.5px;font-weight:700;
-    text-decoration:none;
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0;flex:1 1 auto;}
+  .brand svg{width:22px;height:22px;color:var(--spark);flex:none;}
+  .brand span{
+    font-family:'Unbounded','Manrope',system-ui,sans-serif;
+    font-weight:700;font-size:15px;letter-spacing:.005em;
+    line-height:1.25;
   }
-  @media (max-width:720px){.nav-links{display:none;}}
-
-  /* ---------- hero ---------- */
-  .hero{padding:76px 0 60px;overflow:hidden;}
-  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
-  @media (max-width:900px){.hero .wrap{grid-template-columns:1fr;}}
-
-  .eyebrow{
+  .btn-install{
+    flex:none;
     display:inline-flex;align-items:center;gap:8px;
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;
-    letter-spacing:.08em;text-transform:uppercase;color:var(--spark-ink);
-    background:var(--spark);padding:6px 12px 6px 8px;border-radius:99px;
-    margin-bottom:22px;
+    background:var(--spark);color:var(--spark-ink);
+    padding:10px 18px;border-radius:99px;
+    font-family:'Manrope',sans-serif;font-weight:800;font-size:14px;
+    text-decoration:none;
+    box-shadow:0 8px 22px -10px var(--spark-glow);
   }
-  .eyebrow svg{width:13px;height:13px;}
-  h1.headline{font-size:clamp(2.3rem,4.6vw,3.4rem);line-height:1.05;}
-  h1.headline .accent{color:var(--spark);-webkit-text-stroke:0;}
-  .lede{margin:22px 0 32px;max-width:46ch;color:var(--muted);font-size:1.09rem;}
-
-  .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px;}
-  .btn{
-    display:inline-flex;align-items:center;gap:9px;
-    padding:14px 22px;border-radius:99px;font-weight:800;font-size:15px;
-    text-decoration:none;border:1px solid transparent;transition:transform .12s ease, box-shadow .12s ease;
+  .btn-install svg{width:16px;height:16px;}
+  @media (max-width:440px){
+    header.site{padding:8px 12px;gap:10px;}
+    .brand svg{width:18px;height:18px;}
+    .brand span{font-size:12.5px;}
+    .btn-install{padding:8px 13px;font-size:12.5px;gap:6px;}
+    .btn-install svg{width:14px;height:14px;}
   }
-  .btn:active{transform:translateY(1px);}
-  .btn-primary{background:var(--spark);color:var(--spark-ink);box-shadow:0 10px 30px -12px var(--spark-glow);}
-  .btn-primary:hover{box-shadow:0 14px 34px -10px var(--spark-glow);}
-  .btn-primary svg{width:18px;height:18px;}
-  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line);}
-  .btn-ghost:hover{border-color:var(--muted);}
 
-  .trust-row{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted);}
-  .trust-row span{display:inline-flex;align-items:center;gap:6px;}
-  .trust-row svg{width:14px;height:14px;color:var(--spark);flex:none;}
-
-  /* floating player mock */
-  .hero-art{position:relative;display:flex;justify-content:center;}
-  .player-card{
-    width:min(320px,100%);
-    border-radius:var(--radius-l);
+  /* ---------- stage / carousel ---------- */
+  .stage{
+    position:relative;
+    flex:1;
+    min-height:0;
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
     overflow:hidden;
-    background:var(--panel);
-    border:1px solid var(--line);
-    box-shadow:0 40px 80px -30px rgba(0,0,0,.35);
-    transform:rotate(2.5deg);
+    touch-action:pan-y;
   }
-  .player-card img{display:block;width:100%;}
-  .hero-art::before{
-    content:"";position:absolute;inset:-20% -10%;
-    background:radial-gradient(closest-side, var(--spark-glow), transparent 70%);
-    z-index:-1;
+  .frame{
+    position:relative;
+    width:min(100%, calc((100vh - 60px - 40px) * 1280 / 800));
+    max-width:1280px;
+    aspect-ratio:1280/800;
+    border-radius:18px;
+    overflow:hidden;
+    background:var(--stage);
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.45);
   }
-
-  /* ---------- section shells ---------- */
-  .section-head{max-width:640px;margin:0 0 44px;}
-  .section-head .kicker{
-    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--spark);
-    display:block;margin-bottom:12px;
+  .slides{
+    position:relative;
+    width:100%;height:100%;
   }
-  .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);}
-  .section-head p{color:var(--muted);margin-top:14px;font-size:1.02rem;}
-  .band{padding:88px 0;}
-  .band-alt{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-
-  /* ---------- features ---------- */
-  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;}
-  @media (max-width:860px){.feature-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:600px){.feature-grid{grid-template-columns:1fr;}}
-  .feature{background:var(--paper);padding:30px 26px;}
-  .feature .ficon{
-    width:42px;height:42px;border-radius:12px;background:var(--spark);color:var(--spark-ink);
-    display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  .slide{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;
+    transition:opacity .55s ease;
+    pointer-events:none;
   }
-  .feature .ficon svg{width:22px;height:22px;}
-  .feature h3{font-size:1.06rem;margin-bottom:9px;font-weight:700;letter-spacing:0;}
-  .feature p{margin:0;color:var(--muted);font-size:.96rem;}
-
-  /* ---------- engine callout ---------- */
-  .engine{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
-  @media (max-width:860px){.engine{grid-template-columns:1fr;}}
-  .engine h2{font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:18px;}
-  .engine p{color:var(--muted);margin:0 0 14px;}
-  .engine ul{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:12px;}
-  .engine li{display:flex;gap:10px;font-size:.95rem;color:var(--ink);}
-  .engine li svg{width:16px;height:16px;color:var(--spark);flex:none;margin-top:3px;}
-  .quote-card{
-    background:var(--ink);color:var(--paper);
-    border-radius:var(--radius-m);padding:34px;
-    font-family:'JetBrains Mono',monospace;font-size:.92rem;line-height:1.75;
-  }
-  .quote-card .qmark{color:var(--spark);font-family:'Unbounded',sans-serif;font-size:2rem;line-height:1;display:block;margin-bottom:10px;}
-  .quote-card cite{display:block;margin-top:18px;font-style:normal;color:color-mix(in srgb, var(--paper) 60%, transparent);font-size:.8rem;}
-
-  /* ---------- gallery ---------- */
-  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-  @media (max-width:860px){.gallery{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:600px){.gallery{grid-template-columns:1fr;}}
-  figure.shot{margin:0;border-radius:var(--radius-m);overflow:hidden;border:1px solid var(--line);background:var(--panel);}
-  figure.shot img{aspect-ratio:1280/800;object-fit:cover;}
-  figure.shot figcaption{padding:14px 16px;font-size:.86rem;color:var(--muted);border-top:1px solid var(--line);}
-  figure.shot figcaption b{color:var(--ink);font-weight:700;}
-
-  /* ---------- hotkeys strip ---------- */
-  .keys{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
-  .key{
-    font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;
-    background:var(--panel);border:1px solid var(--line);border-radius:9px;
-    padding:8px 12px;color:var(--ink);
+  .slide.active{opacity:1;pointer-events:auto;}
+  .slide img{
+    width:100%;height:100%;
+    object-fit:cover;
   }
 
-  /* ---------- privacy ---------- */
-  .perm-list{display:grid;gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;}
-  .perm{background:var(--paper);padding:20px 24px;display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:start;}
-  @media (max-width:700px){.perm{grid-template-columns:1fr;gap:6px;}}
-  .perm .pname{font-family:'JetBrains Mono',monospace;font-size:.86rem;font-weight:600;color:var(--spark-ink);background:var(--spark);display:inline-block;padding:4px 10px;border-radius:7px;width:fit-content;height:fit-content;}
-  .perm p{margin:0;color:var(--muted);font-size:.93rem;}
-
-  /* ---------- final cta ---------- */
-  .final{
-    padding:96px 0 100px;text-align:center;
+  .arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:44px;height:44px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(20,17,13,.5);
+    backdrop-filter:blur(6px);
+    color:#f4eee0;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+    z-index:4;
   }
-  .final h2{font-size:clamp(2rem,4.4vw,2.9rem);max-width:16ch;margin:0 auto 18px;}
-  .final p{color:var(--muted);max-width:44ch;margin:0 auto 34px;}
-  .final .cta-row{justify-content:center;}
+  .arrow:hover{background:rgba(20,17,13,.75);border-color:rgba(255,255,255,.32);}
+  .arrow svg{width:19px;height:19px;}
+  .arrow.prev{left:14px;}
+  .arrow.next{right:14px;}
+  @media (max-width:640px){
+    .arrow{width:36px;height:36px;}
+    .arrow.prev{left:8px;}
+    .arrow.next{right:8px;}
+  }
+  @media (max-width:700px){
+    .stage{align-items:flex-start;padding-top:28px;}
+  }
 
-  /* ---------- footer ---------- */
-  footer{border-top:1px solid var(--line);padding:44px 0 60px;}
-  .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;}
-  .foot-brand{max-width:360px;}
-  .foot-brand .brand{margin-bottom:12px;}
-  .foot-brand p{color:var(--muted);font-size:.86rem;margin:0;}
-  .foot-links{display:flex;gap:50px;flex-wrap:wrap;}
-  .foot-col h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 12px;font-family:'JetBrains Mono',monospace;font-weight:600;}
-  .foot-col a{display:block;font-size:.9rem;text-decoration:none;color:var(--ink);margin-bottom:9px;}
-  .foot-col a:hover{color:var(--spark);}
-  .foot-bottom{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  .dots{
+    position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+    display:flex;gap:9px;
+    padding:9px 12px;
+    border-radius:99px;
+    background:rgba(20,17,13,.45);
+    backdrop-filter:blur(6px);
+    z-index:4;
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(244,238,224,.35);
+    border:none;padding:0;cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .dot.active{background:var(--spark);transform:scale(1.25);}
 
-  @media (prefers-reduced-motion: no-preference){
-    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
-    .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .slide{transition:none;}
   }
 </style>
 </head>
 <body>
 
 <header class="site">
-  <nav class="nav">
-    <a class="brand" href="#top">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.781 9.35725L23.7157 8.8734L19.7701 7.94806L21.8082 4.90962L21.5673 4.58021L18.3891 6.14249L18.7401 1.89305L18.3891 1.71809L16.4163 5.12968L14.0939 0H13.6558L14.2245 5.02033L8.41633 0.374509L7.91293 0.50709L12.3837 6.14249L3.50748 3.17102L3.09116 3.63301L11.0245 8.14625L0.110204 9.07159L0 9.73176L11.3537 10.9646L1.86395 18.7596L2.30204 19.3542L13.5456 13.1885L11.332 24H12.0109L16.351 13.8281L18.9809 21.7762L19.4408 21.4235L18.4544 13.4536L22.4653 18.0106L22.7075 17.5486L19.7265 11.9118L23.9565 13.4099L24 12.9465L20.4721 10.1063L23.781 9.35725Z"/></svg>
-      Яндекс.Музыка
-    </a>
-    <div class="nav-links">
-      <a href="#features">Возможности</a>
-      <a href="#engine">Как устроено</a>
-      <a href="#screens">Скриншоты</a>
-      <a href="#privacy">Приватность</a>
-    </div>
-    <a class="cta-small" href="https://chromewebstore.google.com/detail/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF/jjdohkcaobjbohkkhakfddoifngielhk">Установить</a>
-  </nav>
+  <a class="brand" href="#top">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.781 9.35725L23.7157 8.8734L19.7701 7.94806L21.8082 4.90962L21.5673 4.58021L18.3891 6.14249L18.7401 1.89305L18.3891 1.71809L16.4163 5.12968L14.0939 0H13.6558L14.2245 5.02033L8.41633 0.374509L7.91293 0.50709L12.3837 6.14249L3.50748 3.17102L3.09116 3.63301L11.0245 8.14625L0.110204 9.07159L0 9.73176L11.3537 10.9646L1.86395 18.7596L2.30204 19.3542L13.5456 13.1885L11.332 24H12.0109L16.351 13.8281L18.9809 21.7762L19.4408 21.4235L18.4544 13.4536L22.4653 18.0106L22.7075 17.5486L19.7265 11.9118L23.9565 13.4099L24 12.9465L20.4721 10.1063L23.781 9.35725Z"/></svg>
+    <span>Яндекс.Музыка - управление плеером</span>
+  </a>
+  <a class="btn-install" href="https://chromewebstore.google.com/detail/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF/jjdohkcaobjbohkkhakfddoifngielhk">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v14m0 0-5-5m5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Установить
+  </a>
 </header>
 
-<main id="top">
-
-  <section class="hero">
-    <div class="wrap">
-      <div>
-        <span class="eyebrow">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.781 9.35725L23.7157 8.8734L19.7701 7.94806L21.8082 4.90962L21.5673 4.58021L18.3891 6.14249L18.7401 1.89305L18.3891 1.71809L16.4163 5.12968L14.0939 0H13.6558L14.2245 5.02033L8.41633 0.374509L7.91293 0.50709L12.3837 6.14249L3.50748 3.17102L3.09116 3.63301L11.0245 8.14625L0.110204 9.07159L0 9.73176L11.3537 10.9646L1.86395 18.7596L2.30204 19.3542L13.5456 13.1885L11.332 24H12.0109L16.351 13.8281L18.9809 21.7762L19.4408 21.4235L18.4544 13.4536L22.4653 18.0106L22.7075 17.5486L19.7265 11.9118L23.9565 13.4099L24 12.9465L20.4721 10.1063L23.781 9.35725Z"/></svg>
-          Расширение для Chrome
-        </span>
-        <h1 class="headline">Плеер Яндекс Музыки<br>на панели <span class="accent">браузера</span></h1>
-        <p class="lede">Не нужно искать вкладку с музыкой среди двадцати открытых. Обложка, перемотка, лайк и громкость — по клику на значок. Плюс горячие клавиши, отметка ИИ-треков и история в Last.fm.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF/jjdohkcaobjbohkkhakfddoifngielhk">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v14m0 0-5-5m5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Установить из Chrome Web Store
-          </a>
-          <a class="btn btn-ghost" href="https://github.com/bbird1980/ymusic-new">Исходный код на GitHub</a>
-        </div>
-        <div class="trust-row">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z" stroke-linejoin="round"/></svg>Без рекламы и регистрации</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><path d="M8 20h8M12 16v4" stroke-linecap="round"/></svg>Не читает вёрстку витрины</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Бесплатно</span>
-        </div>
-      </div>
-      <div class="hero-art">
-        <div class="player-card">
-          <img src="assets/screenshots/hero-player-card.png" alt="Окно расширения: обложка трека Tame Impala — Let It Happen, полоса перемотки и кнопки управления" width="480" height="675">
-        </div>
-      </div>
+<main id="top" class="stage">
+  <div class="frame">
+    <div class="slides" id="slides">
+      <figure class="slide active"><img src="assets/screenshots/screenshot-1-music.png" alt="Окно расширения при обычном воспроизведении: обложка, перемотка, лайк, громкость" width="1280" height="800"></figure>
+      <figure class="slide"><img src="assets/screenshots/screenshot-2-radio.png" alt="Окно расширения в режиме радио с блоком «Сейчас в эфире»" width="1280" height="800"></figure>
+      <figure class="slide"><img src="assets/screenshots/screenshot-3-options.png" alt="Страница настроек: горячие клавиши, уведомления, ИИ-музыка" width="1280" height="800"></figure>
+      <figure class="slide"><img src="assets/screenshots/screenshot-4-ai.png" alt="Метка ИИ-музыки у трека и у артиста" width="1280" height="800"></figure>
+      <figure class="slide"><img src="assets/screenshots/screenshot-5-obs.png" alt="Файл с текущим треком и обложкой для OBS" width="1280" height="800"></figure>
+      <figure class="slide"><img src="assets/screenshots/screenshot-6-lastfm.png" alt="Подключение аккаунта Last.fm и очередь отправки" width="1280" height="800"></figure>
     </div>
-  </section>
 
-  <section class="band" id="features">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="kicker">Возможности</span>
-        <h2>Одна кнопка вместо вкладки</h2>
-        <p>Окно расширения перестраивается под то, что играет: музыка, «Моя волна», подкаст, аудиокнига, нейромузыка или радио. Кнопки не врут — то, чего сейчас сделать нельзя, просто погашено.</p>
-      </div>
-      <div class="feature-grid reveal">
-        <div class="feature">
-          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><circle cx="12" cy="10" r="2.4"/><path d="M8 20h8" stroke-linecap="round"/></svg></div>
-          <h3>Окно расширения</h3>
-          <p>Обложка, трек и артист с переходом на страницу. Перемотка, пауза, следующий/предыдущий, лайк, перемешивание, повтор, громкость и скорость — в подкастах и книгах.</p>
-        </div>
-        <div class="feature">
-          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="11" rx="2"/><path d="M7 11h.01M11 11h.01M15 11h.01M17 11h.01M7 14h10" stroke-linecap="round"/></svg></div>
-          <h3>Горячие клавиши</h3>
-          <p>Четырнадцать команд: воспроизведение, переходы, перемотка на 10 секунд, лайк, громкость. Медиаклавиши работают сразу, остальные назначаются в настройках Chrome — можно сделать глобальными.</p>
-        </div>
-        <div class="feature">
-          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 0 0-4-5.65V5a2 2 0 1 0-4 0v.35A6 6 0 0 0 6 11v3.2a2 2 0 0 1-.6 1.4L4 17h5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 17a3 3 0 0 0 6 0" stroke-linecap="round"/></svg></div>
-          <h3>Уведомление о треке</h3>
-          <p>Карточка с обложкой при каждой смене трека — видно, что заиграло, не переключаясь на вкладку. Можно выключить или показывать только по горячей клавише.</p>
-        </div>
-        <div class="feature">
-          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4" stroke-linecap="round"/></svg></div>
-          <h3>Файл для стримеров</h3>
-          <p>Пишет текущий трек в текстовый файл и кладёт рядом обложку — готовые источники «Текст» и «Изображение» для OBS. Папка выбирается один раз, наружу ничего не уходит.</p>
-        </div>
-        <div class="feature">
-          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z" stroke-linejoin="round"/><path d="m9.5 12 1.8 1.8L15 10" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3>Метка ИИ-музыки</h3>
-          <p>Показывает, что играет сгенерированный трек, по открытой базе slopless.art — отдельно для трека и артиста. Можно пропускать такие треки автоматически, функция выключена по умолчанию.</p>
-        </div>
-        <div class="feature">
-          <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9" stroke-linecap="round"/><path d="M3 4v6h6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3>История в Last.fm</h3>
-          <p>Прослушанное уходит в вашу историю — считается сыгранное время, а не позиция. Сеть пропала — запись подождёт в очереди и уйдёт позже.</p>
-        </div>
-      </div>
-      <div class="keys reveal">
-        <span class="key">▶ / ⏸ пробел</span>
-        <span class="key">⏮ ⏭ треки</span>
-        <span class="key">±10 сек перемотка</span>
-        <span class="key">♥ / ✕ лайк</span>
-        <span class="key">🔀 перемешать</span>
-        <span class="key">🔁 повтор</span>
-        <span class="key">🔊 громкость</span>
-        <span class="key">карточка трека</span>
-      </div>
-    </div>
-  </section>
+    <button class="arrow prev" type="button" aria-label="Предыдущий слайд">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 5-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="arrow next" type="button" aria-label="Следующий слайд">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 5 7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 
-  <section class="band band-alt" id="engine">
-    <div class="wrap">
-      <div class="engine">
-        <div class="reveal">
-          <span class="kicker">Как устроено</span>
-          <h2>Говорит с движком плеера, а не с вёрсткой</h2>
-          <p>Музыка отдаёт состояние и управление через внутренний движок Sonata — теми же объектами, что и собственный интерфейс сервиса. Расширение обращается к ним напрямую.</p>
-          <p>Поэтому оно одинаково работает во всех режимах и не ломается, когда витрина переставит кнопку местами.</p>
-          <ul>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Плейлисты, «Моя волна», подкасты, книги и сказки</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Нейромузыка и генеративный поток</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>FM-радио — свой стор, тот же подход</li>
-          </ul>
-        </div>
-        <div class="quote-card reveal">
-          <span class="qmark">“</span>
-          Расширение не нажимает на кнопки страницы и вообще не разбирает
-          её вёрстку — оно обращается к движку плеера напрямую.
-          <cite>— из документации проекта</cite>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band" id="screens">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="kicker">Скриншоты</span>
-        <h2>Окно под каждый режим</h2>
-        <p>От плейлиста и радио до настроек, ИИ-меток, файла для OBS и Last.fm.</p>
-      </div>
-      <div class="gallery reveal">
-        <figure class="shot">
-          <img src="assets/screenshots/screenshot-1-music.png" alt="Окно расширения при обычном воспроизведении трека" loading="lazy" width="1280" height="800">
-          <figcaption><b>Музыка.</b> Обложка, перемотка, лайк, громкость.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/screenshot-2-radio.png" alt="Окно расширения в режиме радио с блоком «Сейчас в эфире»" loading="lazy" width="1280" height="800">
-          <figcaption><b>Радио.</b> Блок «Сейчас в эфире», без лишних кнопок.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/screenshot-3-options.png" alt="Страница настроек расширения" loading="lazy" width="1280" height="800">
-          <figcaption><b>Настройки.</b> Горячие клавиши, уведомления, ИИ-музыка.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/screenshot-4-ai.png" alt="Метка ИИ-трека в окне расширения" loading="lazy" width="1280" height="800">
-          <figcaption><b>ИИ-музыка.</b> Метка у трека и у артиста, отдельно.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/screenshot-5-obs.png" alt="Настройка файла для OBS с текущим треком" loading="lazy" width="1280" height="800">
-          <figcaption><b>Файл для OBS.</b> Текст и обложка на диске.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshots/screenshot-6-lastfm.png" alt="Подключение аккаунта Last.fm в настройках" loading="lazy" width="1280" height="800">
-          <figcaption><b>Last.fm.</b> Подключение и очередь отправки.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="band band-alt" id="privacy">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="kicker">Приватность</span>
-        <h2>Наружу — только то, что вы включили</h2>
-        <p>Личные данные не собираются и не хранятся. Каждое разрешение — под конкретную функцию, необязательные запрашиваются отдельно и снимаются вместе с выключением.</p>
-      </div>
-      <div class="perm-list reveal">
-        <div class="perm">
-          <span class="pname">storage</span>
-          <p>Настройки расширения хранятся в браузере и не покидают его.</p>
-        </div>
-        <div class="perm">
-          <span class="pname">notifications</span>
-          <p>Карточка «сейчас играет» при смене трека и по горячей клавише.</p>
-        </div>
-        <div class="perm">
-          <span class="pname">music / radio .yandex.*</span>
-          <p>Чтение состояния плеера и передача команд — основная функция расширения.</p>
-        </div>
-        <div class="perm">
-          <span class="pname">slopless.art — опционально</span>
-          <p>Проверка трека и артиста по открытой базе ИИ-музыки. Передаётся только идентификатор, доступ запрашивается отдельно.</p>
-        </div>
-        <div class="perm">
-          <span class="pname">ws.audioscrobbler.com — опционально</span>
-          <p>Отправка прослушанного в аккаунт Last.fm после того, как вы сами его подключите.</p>
-        </div>
-        <div class="perm">
-          <span class="pname">папка для файла OBS — опционально</span>
-          <p>Выбирается вами через системный диалог. Файлы остаются на компьютере.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="final">
-    <div class="wrap">
-      <h2 class="reveal">Управляйте музыкой, не отвлекаясь на вкладку</h2>
-      <p class="reveal">Бесплатно, без рекламы и регистрации. Работает на music.yandex.ru / .ua / .by / .kz и radio.yandex.*</p>
-      <div class="cta-row reveal">
-        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF/jjdohkcaobjbohkkhakfddoifngielhk">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v14m0 0-5-5m5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Установить из Chrome Web Store
-        </a>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-brand">
-        <a class="brand" href="#top">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.781 9.35725L23.7157 8.8734L19.7701 7.94806L21.8082 4.90962L21.5673 4.58021L18.3891 6.14249L18.7401 1.89305L18.3891 1.71809L16.4163 5.12968L14.0939 0H13.6558L14.2245 5.02033L8.41633 0.374509L7.91293 0.50709L12.3837 6.14249L3.50748 3.17102L3.09116 3.63301L11.0245 8.14625L0.110204 9.07159L0 9.73176L11.3537 10.9646L1.86395 18.7596L2.30204 19.3542L13.5456 13.1885L11.332 24H12.0109L16.351 13.8281L18.9809 21.7762L19.4408 21.4235L18.4544 13.4536L22.4653 18.0106L22.7075 17.5486L19.7265 11.9118L23.9565 13.4099L24 12.9465L20.4721 10.1063L23.781 9.35725Z"/></svg>
-          Яндекс.Музыка
-        </a>
-        <p>Неофициальное расширение: сделано пользователем сервиса и с Яндексом не связано. Все товарные знаки принадлежат их владельцам.</p>
-      </div>
-      <div class="foot-links">
-        <div class="foot-col">
-          <h4>Расширение</h4>
-          <a href="https://chromewebstore.google.com/detail/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF/jjdohkcaobjbohkkhakfddoifngielhk">Chrome Web Store</a>
-          <a href="https://github.com/bbird1980/ymusic-new">Исходный код</a>
-          <a href="https://github.com/bbird1980/ymusic-new/blob/main/README.md">Документация</a>
-        </div>
-        <div class="foot-col">
-          <h4>Поддерживает</h4>
-          <a href="https://music.yandex.ru">music.yandex.ru</a>
-          <a href="https://radio.yandex.ru">radio.yandex.ru</a>
-        </div>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span>© 2026, некоммерческий проект</span>
-      <span>Сделано на Vue и внутреннем движке Sonata</span>
+    <div class="dots" role="tablist" aria-label="Слайды">
+      <button class="dot active" type="button" aria-label="Слайд 1"></button>
+      <button class="dot" type="button" aria-label="Слайд 2"></button>
+      <button class="dot" type="button" aria-label="Слайд 3"></button>
+      <button class="dot" type="button" aria-label="Слайд 4"></button>
+      <button class="dot" type="button" aria-label="Слайд 5"></button>
+      <button class="dot" type="button" aria-label="Слайд 6"></button>
     </div>
   </div>
-</footer>
+</main>
 
 <script>
-  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('in'); });
-    }, {threshold:.12});
-    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-  } else {
-    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+(function(){
+  var stage = document.querySelector('.stage');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.dot'));
+  var prevBtn = document.querySelector('.arrow.prev');
+  var nextBtn = document.querySelector('.arrow.next');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var i = 0, timer = null;
+
+  function show(n){
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function(s, idx){ s.classList.toggle('active', idx === i); });
+    dots.forEach(function(d, idx){ d.classList.toggle('active', idx === i); });
   }
+  function next(){ show(i + 1); }
+  function prev(){ show(i - 1); }
+
+  function play(){
+    if (reduceMotion) return;
+    stop();
+    timer = setInterval(next, 6000);
+  }
+  function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+
+  prevBtn.addEventListener('click', function(){ prev(); play(); });
+  nextBtn.addEventListener('click', function(){ next(); play(); });
+  dots.forEach(function(d, idx){
+    d.addEventListener('click', function(){ show(idx); play(); });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ next(); play(); }
+    if (e.key === 'ArrowLeft'){ prev(); play(); }
+  });
+
+  stage.addEventListener('mouseenter', stop);
+  stage.addEventListener('mouseleave', play);
+
+  var touchX = null;
+  stage.addEventListener('touchstart', function(e){ touchX = e.changedTouches[0].clientX; stop(); }, {passive:true});
+  stage.addEventListener('touchend', function(e){
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    touchX = null;
+    play();
+  }, {passive:true});
+
+  play();
+})();
 </script>
 </body>
 </html>
