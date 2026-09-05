@@ -100,6 +100,7 @@
   }
 
   .brand small{display:inline;font:inherit;}
+  .brand .eyebrow{display:none;}
 
   /* ---------- stage / carousel ---------- */
   .stage{
@@ -135,7 +136,9 @@
   }
   .slide.active{opacity:1;pointer-events:auto;}
   .visual,.shot{width:100%;height:100%;}
-  .mobile-only{display:none;}
+  .mobile-only,.desktop-only{display:none;}
+  .text-line{display:block;white-space:nowrap;}
+  .text-line+br{display:none;}
   .slide img{
     width:100%;height:100%;
     object-fit:contain;
@@ -177,13 +180,88 @@
   .dot::after{content:"";display:block;margin:auto;width:7px;height:7px;border-radius:99px;
     background:rgba(244,238,224,.4);transition:width .3s ease,background .3s ease;}
   .dot.active::after{background:var(--spark);width:20px;}
-  .rotation{position:absolute;right:14px;bottom:14px;width:44px;height:44px;
-    border:1px solid #ffffff30;border-radius:50%;background:#14110db3;color:#f4eee0;
-    cursor:pointer;font-size:16px;}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;}
   .gallery{position:relative;width:100%;height:100%;max-width:1280px;max-height:800px;}
   button,a{-webkit-tap-highlight-color:transparent;}
   button:focus-visible,a:focus-visible{outline:3px solid var(--spark);outline-offset:4px;}
+
+  /* Desktop: a quiet product showcase with named, manual feature navigation. */
+  @media (min-width:761px){
+    html,body{height:auto;min-height:100%;}
+    body{min-height:100svh;overflow:auto;}
+    .desktop-only{display:block;}
+    header.site{min-height:94px;width:100%;max-width:1440px;margin:0 auto;
+      padding:24px clamp(32px,5vw,80px);border:0;background:transparent;}
+    .brand{gap:12px;}
+    .brand svg{width:31px;height:31px;}
+    .brand span{font-size:13px;letter-spacing:-.035em;}
+    .brand small{display:inline;font:inherit;}
+    .brand>span{white-space:nowrap;}
+    header.site>.btn-install{min-height:46px;padding:12px 20px;box-shadow:none;}
+    .stage{display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);
+      grid-template-rows:1fr auto;column-gap:clamp(28px,4vw,64px);row-gap:28px;
+      width:100%;max-width:1440px;margin:0 auto;min-height:0;flex:1;
+      padding:12px clamp(32px,5vw,80px) 28px;overflow:visible;align-items:center;}
+    .intro{display:block;grid-column:1;grid-row:1;padding:16px 0 28px;}
+    .eyebrow{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:700;
+      letter-spacing:.17em;text-transform:uppercase;margin:0 0 26px;color:var(--muted);}
+    .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--spark);}
+    .brand .eyebrow{display:flex;font-family:'Manrope',sans-serif;font-size:10px;font-weight:700;
+      letter-spacing:.17em;line-height:1.25;margin:9px 0 0;}
+    .intro>.eyebrow{display:none;}
+    #page-title,.intro-copy{display:none;}
+    .desktop-feature{max-width:480px;}
+    .feature-title{font-family:'Unbounded','Manrope',sans-serif;font-size:clamp(32px,3.6vw,54px);
+      font-weight:700;letter-spacing:-.055em;line-height:1.2;margin:0 0 26px;}
+    .feature-description{color:var(--muted);font-size:16px;line-height:1.8;margin:0;max-width:420px;}
+    .gallery{display:contents;}
+    .frame{grid-column:2;grid-row:1;width:100%;height:clamp(430px,calc(100svh - 244px),650px);
+      max-height:none;max-width:none;border-radius:32px;background:#141215;
+      box-shadow:0 24px 44px -36px #211c1480;isolation:isolate;}
+    .slides{border-radius:inherit;overflow:hidden;}
+    .slide{display:flex;overflow:hidden;isolation:isolate;transition:opacity .35s ease;}
+    .slide::before{content:"";position:absolute;inset:0;z-index:-1;
+      background:radial-gradient(ellipse at 50% 68%,var(--aura),transparent 73%);opacity:.6;}
+    .slide::after{content:"";position:absolute;inset:0;z-index:-1;
+      background:linear-gradient(135deg,#ffffff05,transparent 45%);}
+    .visual{display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:60px 32px;}
+    .shot{position:relative;flex:none;overflow:hidden;border-radius:17px;
+      width:min(100%,calc(clamp(310px,calc(100svh - 364px),530px) * var(--crop-w) / 662));
+      height:auto;aspect-ratio:var(--crop-w) / 662;
+      box-shadow:0 24px 44px -14px #0009,0 0 0 1px #ffffff17;
+      transform:translateY(10px);transition:transform .45s ease;}
+    .slide.active .shot{transform:translateY(0);}
+    .shot img{position:absolute;max-width:none;width:calc(1280 / var(--crop-w) * 100%);
+      height:auto;left:calc(-1 * var(--crop-x) / var(--crop-w) * 100%);top:calc(-70 / 662 * 100%);}
+    .scene-caption{position:absolute;bottom:23px;left:28px;right:28px;z-index:2;
+      font-size:10px;color:#c5bdcb;text-align:center;letter-spacing:.03em;margin:0;pointer-events:none;}
+    .carousel-controls{grid-column:1/-1;grid-row:2;position:static;inset:auto;display:block;}
+    .carousel-controls>.arrow{display:none;}
+    .dots{position:static;transform:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+      gap:12px;padding:0;background:none;backdrop-filter:none;border-radius:0;}
+    .dot{position:relative;display:flex;align-items:center;gap:12px;width:auto;height:76px;
+      border-top:1px solid var(--line);padding:12px 4px;background:none;color:var(--muted);
+      font-family:inherit;text-align:left;transition:color .2s ease;}
+    .dot::after{position:absolute;left:0;right:0;top:-1px;height:2px;width:auto;margin:0;
+      background:var(--ink);border-radius:0;transform:scaleX(0);transform-origin:left;transition:transform .3s ease;}
+    .dot.active::after{width:auto;background:var(--ink);transform:scaleX(1);}
+    .dot.active,.dot:hover{color:var(--ink);}
+    .nav-number{font-size:10px;font-variant-numeric:tabular-nums;opacity:.6;}
+    .nav-text{display:flex;flex-direction:column;gap:5px;}
+    .nav-text strong{font-size:13px;font-weight:700;}
+    .nav-text small{font-size:10px;font-weight:500;white-space:nowrap;}
+    .dot.active .nav-number{color:var(--spark);opacity:1;}
+  }
+  @media (min-width:761px) and (max-width:1000px){
+    .feature-description{font-size:13px;}
+    .feature-description br{display:none;}
+    .visual{padding:60px 24px;}
+    .nav-number{display:none;}
+    .nav-text strong{font-size:12px;}
+    .nav-text small{font-size:9px;}
+    .dots{gap:8px;}
+    .dot{padding-left:0;}
+  }
 
   /* A portrait composition of the original screenshots, with real text above them. */
   @media (max-width:760px){
@@ -257,7 +335,6 @@
       background:transparent;color:var(--ink);backdrop-filter:none;}
     .arrow:hover{background:var(--line);border-color:var(--line);}
     .arrow svg{width:16px;height:16px;}
-    .rotation{display:none;}
     .install-note{display:flex;gap:13px;align-items:center;border-top:1px solid var(--line);padding:21px 0 0;}
     .install-note svg{width:24px;height:24px;flex:none;color:var(--muted);}
     .install-note p{font-size:11px;line-height:1.7;color:var(--muted);margin:0;}
@@ -280,9 +357,9 @@
 <body>
 
 <header class="site">
-  <a class="brand" href="#top">
+  <a class="brand" href="https://chromewebstore.google.com/detail/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF/jjdohkcaobjbohkkhakfddoifngielhk">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.781 9.35725L23.7157 8.8734L19.7701 7.94806L21.8082 4.90962L21.5673 4.58021L18.3891 6.14249L18.7401 1.89305L18.3891 1.71809L16.4163 5.12968L14.0939 0H13.6558L14.2245 5.02033L8.41633 0.374509L7.91293 0.50709L12.3837 6.14249L3.50748 3.17102L3.09116 3.63301L11.0245 8.14625L0.110204 9.07159L0 9.73176L11.3537 10.9646L1.86395 18.7596L2.30204 19.3542L13.5456 13.1885L11.332 24H12.0109L16.351 13.8281L18.9809 21.7762L19.4408 21.4235L18.4544 13.4536L22.4653 18.0106L22.7075 17.5486L19.7265 11.9118L23.9565 13.4099L24 12.9465L20.4721 10.1063L23.781 9.35725Z"/></svg>
-    <span>Яндекс.Музыка<span class="brand-separator"> — </span><small>управление плеером</small></span>
+    <span><span class="brand-title">Яндекс.Музыка<span class="brand-separator"> — </span><small>управление плеером</small></span><span class="eyebrow desktop-only">Расширение для Chrome</span></span>
   </a>
   <a class="btn-install" href="https://chromewebstore.google.com/detail/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF/jjdohkcaobjbohkkhakfddoifngielhk">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v14m0 0-5-5m5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -291,19 +368,26 @@
 </header>
 
 <main id="top" class="stage">
-  <section class="intro mobile-only" aria-labelledby="mobile-title">
+  <section class="intro" aria-label="Расширение для Chrome">
     <p class="eyebrow">Расширение для Chrome</p>
-    <h1 id="mobile-title">Вся музыка.<br><span>Под рукой.</span></h1>
+    <h1 id="page-title">Вся музыка.<br><span>Под рукой.</span></h1>
     <p class="intro-copy">Любимый плеер — на панели браузера.<br>Переключай треки, а не вкладки.</p>
+    <div class="desktop-only">
+      <div class="desktop-feature">
+        <h1 class="feature-title"><span class="text-line">Твой трек.</span> <span class="text-line">В один клик.</span></h1>
+        <p class="feature-description"><span class="text-line">Обложка, перемотка, лайк и громкость.</span><br><span class="text-line">Всё рядом, чем бы ты ни занимался.</span></p>
+      </div>
+    </div>
   </section>
   <section class="gallery" aria-label="Возможности расширения" aria-roledescription="карусель" tabindex="0">
   <div class="frame">
+    <p class="scene-caption desktop-only" aria-hidden="true">Плеер</p>
 
     <div class="slides" id="slides">
       <figure class="slide active" style="--crop-x:753;--crop-w:448;--aura:#8061b8" role="group" aria-roledescription="слайд" aria-label="1 из 6: Плеер" aria-hidden="false">
         <figcaption class="slide-copy mobile-only">
           <p class="feature-label"><span>Плеер</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
-          <h2>Твой трек. В один клик.</h2><p>Обложка, перемотка, лайк и громкость.<br>Всё рядом, чем бы ты ни занимался.</p>
+          <h2><span class="text-line">Твой трек.</span> <span class="text-line">В один клик.</span></h2><p><span class="text-line">Обложка, перемотка, лайк и громкость.</span><br><span class="text-line">Всё рядом, чем бы ты ни занимался.</span></p>
         </figcaption>
         <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-1-music.png" alt="Окно расширения при обычном воспроизведении: обложка, перемотка, лайк, громкость" width="1280" height="800"></div></div>
       </figure>
@@ -345,24 +429,23 @@
     </div>
 
   </div>
-  <div class="carousel-controls">
+  <div class="carousel-controls" id="features">
     <button class="arrow prev" type="button" aria-label="Предыдущий слайд">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 5-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
 
 
     <div class="dots" role="group" aria-label="Выбрать слайд">
-      <button class="dot active" type="button" aria-label="Слайд 1"></button>
-      <button class="dot" type="button" aria-label="Слайд 2"></button>
-      <button class="dot" type="button" aria-label="Слайд 3"></button>
-      <button class="dot" type="button" aria-label="Слайд 4"></button>
-      <button class="dot" type="button" aria-label="Слайд 5"></button>
-      <button class="dot" type="button" aria-label="Слайд 6"></button>
+      <button class="dot active" type="button" aria-label="Слайд 1"><span class="nav-number desktop-only" aria-hidden="true">01</span><span class="nav-text desktop-only" aria-hidden="true"><strong>Плеер</strong><small>Всё под рукой</small></span></button>
+      <button class="dot" type="button" aria-label="Слайд 2"><span class="nav-number desktop-only" aria-hidden="true">02</span><span class="nav-text desktop-only" aria-hidden="true"><strong>Радио</strong><small>На своей волне</small></span></button>
+      <button class="dot" type="button" aria-label="Слайд 3"><span class="nav-number desktop-only" aria-hidden="true">03</span><span class="nav-text desktop-only" aria-hidden="true"><strong>Настройки</strong><small>Под твой ритм</small></span></button>
+      <button class="dot" type="button" aria-label="Слайд 4"><span class="nav-number desktop-only" aria-hidden="true">04</span><span class="nav-text desktop-only" aria-hidden="true"><strong>ИИ-музыка</strong><small>Осознанный выбор</small></span></button>
+      <button class="dot" type="button" aria-label="Слайд 5"><span class="nav-number desktop-only" aria-hidden="true">05</span><span class="nav-text desktop-only" aria-hidden="true"><strong>OBS</strong><small>Музыка в кадре</small></span></button>
+      <button class="dot" type="button" aria-label="Слайд 6"><span class="nav-number desktop-only" aria-hidden="true">06</span><span class="nav-text desktop-only" aria-hidden="true"><strong>Last.fm</strong><small>История в треках</small></span></button>
     </div>
     <button class="arrow next" type="button" aria-label="Следующий слайд">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 5 7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <button class="rotation" type="button" aria-label="Остановить слайд-шоу" aria-pressed="true"><span aria-hidden="true">Ⅱ</span></button>
   </div>
   <p class="sr-only" id="slide-status" aria-live="polite" aria-atomic="true"></p>
   </section>
@@ -377,13 +460,11 @@
   var gallery = document.querySelector('.gallery');
   var slides = Array.from(document.querySelectorAll('.slide'));
   var dots = Array.from(document.querySelectorAll('.dot'));
-  var rotation = document.querySelector('.rotation');
   var status = document.querySelector('#slide-status');
-  var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var mobile = window.matchMedia('(max-width:760px)');
-  var index = 0, timer = null, touch = null, hovering = false, focusPaused = false;
-  // Mobile slides are controlled only by swipes, arrows and pagination.
-  var playing = !motion.matches && !mobile.matches;
+  var title = document.querySelector('.feature-title');
+  var description = document.querySelector('.feature-description');
+  var caption = document.querySelector('.scene-caption');
+  var index = 0, touch = null;
 
   function show(next, announce){
     index = (next + slides.length) % slides.length;
@@ -395,67 +476,39 @@
       dot.classList.toggle('active', n === index);
       dot.setAttribute('aria-current', String(n === index));
     });
+    var copy = slides[index].querySelector('.slide-copy');
+    title.replaceChildren(...Array.from(copy.querySelector('h2').childNodes, function(node){return node.cloneNode(true);}));
+    description.replaceChildren(...Array.from(copy.lastElementChild.childNodes, function(node){return node.cloneNode(true);}));
+    caption.textContent = copy.querySelector('.feature-label>span').textContent;
     if (announce) status.textContent = slides[index].getAttribute('aria-label');
   }
-  function stopTimer(){clearInterval(timer);timer = null;}
-  function syncPlayback(){
-    stopTimer();
-    if (mobile.matches) playing = false;
-    rotation.setAttribute('aria-pressed', String(playing));
-    rotation.setAttribute('aria-label', playing ? 'Остановить слайд-шоу' : 'Запустить слайд-шоу');
-    rotation.firstElementChild.textContent = playing ? 'Ⅱ' : '▷';
-    if (playing && !document.hidden && !hovering && !touch && !focusPaused) {
-      timer = setInterval(function(){show(index + 1, false);}, 6000);
-    }
-  }
-  function select(next){playing = false;show(next, true);syncPlayback();}
-  document.querySelector('.prev').addEventListener('click', function(){select(index - 1);});
-  document.querySelector('.next').addEventListener('click', function(){select(index + 1);});
+  document.querySelector('.prev').addEventListener('click', function(){show(index - 1, true);});
+  document.querySelector('.next').addEventListener('click', function(){show(index + 1, true);});
   dots.forEach(function(dot, n){
     dot.setAttribute('aria-label', slides[n].getAttribute('aria-label'));
-    dot.addEventListener('click', function(){select(n);});
-  });
-  rotation.addEventListener('click', function(){
-    playing = !playing;
-    // An explicit play request also works while this button has focus or hover.
-    focusPaused = false;
-    hovering = false;
-    syncPlayback();
+    dot.addEventListener('click', function(){show(n, true);});
   });
   gallery.addEventListener('keydown', function(event){
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-      event.preventDefault();select(index + (event.key === 'ArrowRight' ? 1 : -1));
+      event.preventDefault();show(index + (event.key === 'ArrowRight' ? 1 : -1), true);
+      // Keep keyboard focus on the selected desktop feature.
+      if (event.target.classList.contains('dot')) dots[index].focus({preventScroll:true});
     }
-  });
-  gallery.addEventListener('pointerenter', function(event){
-    if (event.pointerType === 'mouse') {hovering = true;syncPlayback();}
-  });
-  gallery.addEventListener('pointerleave', function(event){
-    if (event.pointerType === 'mouse') {hovering = false;syncPlayback();}
-  });
-  gallery.addEventListener('focusin', function(){focusPaused = true;syncPlayback();});
-  gallery.addEventListener('focusout', function(event){
-    if (!gallery.contains(event.relatedTarget)) {focusPaused = false;syncPlayback();}
   });
   gallery.addEventListener('touchstart', function(event){
     if (event.touches.length !== 1) {touch = null;return;}
-    touch = {x:event.touches[0].clientX, y:event.touches[0].clientY};stopTimer();
+    touch = {x:event.touches[0].clientX, y:event.touches[0].clientY};
   }, {passive:true});
   gallery.addEventListener('touchend', function(event){
     if (!touch) return;
     var dx = event.changedTouches[0].clientX - touch.x;
     var dy = event.changedTouches[0].clientY - touch.y;
     touch = null;
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) select(index + (dx < 0 ? 1 : -1));
-    else syncPlayback();
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) show(index + (dx < 0 ? 1 : -1), true);
   }, {passive:true});
-  gallery.addEventListener('touchcancel', function(){touch = null;syncPlayback();}, {passive:true});
-  document.addEventListener('visibilitychange', syncPlayback);
-  motion.addEventListener('change', function(){if (motion.matches) playing = false;syncPlayback();});
-  mobile.addEventListener('change', function(){if (mobile.matches) playing = false;syncPlayback();});
+  gallery.addEventListener('touchcancel', function(){touch = null;}, {passive:true});
   show(0, false);
-  syncPlayback();
 })();
 </script>
 </body>
