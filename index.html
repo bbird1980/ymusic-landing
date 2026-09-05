@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" href="assets/icon-128.png">
 <meta property="og:title" content="Яндекс.Музыка — управление плеером">
 <meta property="og:description" content="Плеер Яндекс Музыки на панели браузера: обложка, перемотка, лайк, громкость, горячие клавиши, метка ИИ-музыки и скробблинг в Last.fm.">
-<meta property="og:image" content="assets/screenshots/screenshot-1-music.png">
+<meta property="og:image" content="assets/screenshots/screenshot-1-player-enhanced.png">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,6 +127,7 @@
     width:100%;height:100%;
   }
   .slide{
+    --source-w:1280;--crop-h:662;--crop-y:70;
     position:absolute;inset:0;
     margin:0;
     display:flex;align-items:center;justify-content:center;
@@ -226,13 +227,13 @@
       background:linear-gradient(135deg,#ffffff05,transparent 45%);}
     .visual{display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:60px 32px;}
     .shot{position:relative;flex:none;overflow:hidden;border-radius:17px;
-      width:min(100%,calc(clamp(310px,calc(100svh - 364px),530px) * var(--crop-w) / 662));
-      height:auto;aspect-ratio:var(--crop-w) / 662;
+      width:min(100%,calc(clamp(310px,calc(100svh - 364px),530px) * var(--crop-w) / var(--crop-h)));
+      height:auto;aspect-ratio:var(--crop-w) / var(--crop-h);
       box-shadow:0 24px 44px -14px #0009,0 0 0 1px #ffffff17;
       transform:translateY(10px);transition:transform .45s ease;}
     .slide.active .shot{transform:translateY(0);}
-    .shot img{position:absolute;max-width:none;width:calc(1280 / var(--crop-w) * 100%);
-      height:auto;left:calc(-1 * var(--crop-x) / var(--crop-w) * 100%);top:calc(-70 / 662 * 100%);}
+    .shot img{position:absolute;max-width:none;width:calc(var(--source-w) / var(--crop-w) * 100%);
+      height:auto;left:calc(-1 * var(--crop-x) / var(--crop-w) * 100%);top:calc(-1 * var(--crop-y) / var(--crop-h) * 100%);}
     .scene-caption{position:absolute;bottom:23px;left:28px;right:28px;z-index:2;
       font-size:10px;color:#c5bdcb;text-align:center;letter-spacing:.03em;margin:0;pointer-events:none;}
     .carousel-controls{grid-column:1/-1;grid-row:2;position:static;inset:auto;display:block;}
@@ -316,15 +317,15 @@
     .slide-copy>p:last-child{font-size:12px;line-height:1.7;color:#bdb5c2;margin:0;max-width:330px;}
     .visual{position:absolute;left:0;right:0;bottom:25px;height:340px;
       display:flex;align-items:center;justify-content:center;perspective:900px;}
-    .shot{position:relative;flex:none;width:min(84%,calc(340px * var(--crop-w) / 662));height:auto;
-      aspect-ratio:var(--crop-w) / 662;overflow:hidden;border-radius:14px;
+    .shot{position:relative;flex:none;width:min(84%,calc(340px * var(--crop-w) / var(--crop-h)));height:auto;
+      aspect-ratio:var(--crop-w) / var(--crop-h);overflow:hidden;border-radius:14px;
       box-shadow:0 26px 30px -15px #000b,0 0 0 1px #ffffff12;
       transform:translateY(20px) rotate(3deg) scale(.95);
       transition:transform .85s cubic-bezier(.16,1,.3,1);}
     .active .shot{transform:translateY(0) rotate(-2deg) scale(1);}
     .slide:nth-child(even).active .shot{transform:translateY(0) rotate(2deg) scale(1);}
-    .shot img{position:absolute;max-width:none;width:calc(1280 / var(--crop-w) * 100%);
-      height:auto;left:calc(-1 * var(--crop-x) / var(--crop-w) * 100%);top:calc(-70 / 662 * 100%);}
+    .shot img{position:absolute;max-width:none;width:calc(var(--source-w) / var(--crop-w) * 100%);
+      height:auto;left:calc(-1 * var(--crop-x) / var(--crop-w) * 100%);top:calc(-1 * var(--crop-y) / var(--crop-h) * 100%);}
     .carousel-controls{position:relative;inset:auto;display:flex;align-items:center;
       justify-content:center;gap:4px;height:76px;margin-top:15px;}
     .dots{position:static;transform:none;display:flex;padding:0;background:none;backdrop-filter:none;}
@@ -384,47 +385,47 @@
     <p class="scene-caption desktop-only" aria-hidden="true">Плеер</p>
 
     <div class="slides" id="slides">
-      <figure class="slide active" style="--crop-x:753;--crop-w:448;--aura:#8061b8" role="group" aria-roledescription="слайд" aria-label="1 из 6: Плеер" aria-hidden="false">
+      <figure class="slide active" style="--source-w:1046;--crop-x:0;--crop-y:0;--crop-w:1046;--crop-h:1504;--aura:#6b7066" role="group" aria-roledescription="слайд" aria-label="1 из 6: Плеер" aria-hidden="false">
         <figcaption class="slide-copy mobile-only">
           <p class="feature-label"><span>Плеер</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2><span class="text-line">Твой трек.</span> <span class="text-line">В один клик.</span></h2><p><span class="text-line">Обложка, перемотка, лайк и громкость.</span><br><span class="text-line">Всё рядом, чем бы ты ни занимался.</span></p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-1-music.png" alt="Окно расширения при обычном воспроизведении: обложка, перемотка, лайк, громкость" width="1280" height="800"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-1-player-enhanced.png" alt="Плеер Яндекс Музыки: Oblivion — Orion White, обложка, перемотка, лайк и громкость" width="1046" height="1504"></div></div>
       </figure>
-      <figure class="slide" style="--crop-x:810;--crop-w:391;--aura:#408c79" role="group" aria-roledescription="слайд" aria-label="2 из 6: Радио" aria-hidden="true">
+      <figure class="slide" style="--source-w:963;--crop-x:0;--crop-y:0;--crop-w:963;--crop-h:1633;--aura:#8a3e32" role="group" aria-roledescription="слайд" aria-label="2 из 6: Радио" aria-hidden="true">
         <figcaption class="slide-copy mobile-only">
           <p class="feature-label"><span>Радио</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2>На своей волне.</h2><p>Станция и трек, который сейчас в эфире.<br>Плеер сам узнает, что ты слушаешь.</p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-2-radio.png" alt="Окно расширения в режиме радио с блоком «Сейчас в эфире»" width="1280" height="800"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-2-radio-enhanced.png" alt="Радио ROCK FM: в блоке «Сейчас в эфире» трек Supermassive Black Hole группы Muse" width="963" height="1633"></div></div>
       </figure>
-      <figure class="slide" style="--crop-x:498;--crop-w:703;--aura:#827657" role="group" aria-roledescription="слайд" aria-label="3 из 6: Настройки" aria-hidden="true">
+      <figure class="slide" style="--source-w:1960;--crop-x:0;--crop-y:0;--crop-w:1960;--crop-h:1270;--aura:#827657" role="group" aria-roledescription="слайд" aria-label="3 из 6: Настройки" aria-hidden="true">
         <figcaption class="slide-copy mobile-only">
           <p class="feature-label"><span>Настройки</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2>Как нравится тебе.</h2><p>Горячие клавиши, уведомления и поведение плеера. Настрой свой ритм.</p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-3-options.png" alt="Страница настроек: горячие клавиши, уведомления, ИИ-музыка" width="1280" height="800"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-3-options-overview.png" alt="Настройки расширения: шапка, меню разделов и блоки «Новости» и «Общие»" width="1960" height="1698"></div></div>
       </figure>
-      <figure class="slide" style="--crop-x:753;--crop-w:448;--aura:#c76220" role="group" aria-roledescription="слайд" aria-label="4 из 6: ИИ-музыка" aria-hidden="true">
+      <figure class="slide" style="--source-w:1031;--crop-x:0;--crop-y:0;--crop-w:1031;--crop-h:1525;--aura:#906741" role="group" aria-roledescription="слайд" aria-label="4 из 6: ИИ-музыка" aria-hidden="true">
         <figcaption class="slide-copy mobile-only">
           <p class="feature-label"><span>ИИ-музыка</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2>Знай, что слушаешь.</h2><p>Метка ИИ рядом с именем артиста.<br>Пропускай такие треки или оставляй играть.</p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-4-ai.png" alt="Метка ИИ-музыки у трека и у артиста" width="1280" height="800"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-4-ai-enhanced.png" alt="Плеер с треком Fluxlisimo: красные метки ИИ у названия трека и имени артиста" width="1031" height="1525"></div></div>
       </figure>
-      <figure class="slide" style="--crop-x:539;--crop-w:661;--aura:#3c6a9e" role="group" aria-roledescription="слайд" aria-label="5 из 6: Для стримов" aria-hidden="true">
+      <figure class="slide" style="--source-w:1207;--crop-x:8;--crop-y:4;--crop-w:1191;--crop-h:1292;--aura:#506478" role="group" aria-roledescription="слайд" aria-label="5 из 6: Для стримов" aria-hidden="true">
         <figcaption class="slide-copy mobile-only">
           <p class="feature-label"><span>Для стримов</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2>Музыка в кадре.</h2><p>Текущий трек и обложка — в файлы.<br>Подключи их к своему стриму в OBS.</p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-5-obs.png" alt="Файл с текущим треком и обложкой для OBS" width="1280" height="800"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-5-obs-enhanced.png" alt="Настройки OBS: запись текущего трека и обложки в файлы, выбор папки и действие на паузе" width="1207" height="1303"></div></div>
       </figure>
-      <figure class="slide" style="--crop-x:518;--crop-w:683;--aura:#a03939" role="group" aria-roledescription="слайд" aria-label="6 из 6: Last.fm" aria-hidden="true">
+      <figure class="slide" style="--source-w:1480;--crop-x:35;--crop-y:27;--crop-w:1406;--crop-h:974;--aura:#a03939" role="group" aria-roledescription="слайд" aria-label="6 из 6: Last.fm" aria-hidden="true">
         <figcaption class="slide-copy mobile-only">
           <p class="feature-label"><span>Last.fm</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2>У каждого трека — след.</h2><p>Прослушанное отправится в Last.fm.<br>Твоя музыкальная история продолжается.</p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-6-lastfm.png" alt="Подключение аккаунта Last.fm и очередь отправки" width="1280" height="800"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-6-lastfm-updated.png" alt="Настройки Last.fm: подключённый аккаунт, очередь отправки и подмена имён" width="1480" height="1032"></div></div>
       </figure>
     </div>
 
