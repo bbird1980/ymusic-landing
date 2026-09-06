@@ -353,6 +353,37 @@
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important;}
   }
+
+    /* живая кнопка поверх скриншота первого слайда */
+    .ym-anchor{position:absolute;left:var(--cx);top:var(--cy);width:var(--d);aspect-ratio:1;
+      transform:translate(-50%,-50%);visibility:hidden;pointer-events:none;}
+    .ym-live{position:absolute;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;z-index:4;
+      box-shadow:0 0 0 1px #0003, 0 4px 14px -4px #000a;
+      /* виджет секунду рисует себя сам: пока не готов — не показываем, иначе видно сборку.
+         Гаснет мгновенно (иначе видно, как кнопка переезжает), появляется плавно. */
+      opacity:0;pointer-events:none;}
+    .ym-live.is-ready{opacity:1;pointer-events:auto;transition:opacity .35s ease;}
+    .ym-live iframe{position:absolute;left:50%;top:50%;width:64px;height:64px;border:0;display:block;
+      transform:translate(-50%,-50%) scale(var(--ym-scale,1));transform-origin:center;
+      /* виджет рисует светлый круг с тёмной иконкой, а на макете кнопка жёлтая.
+         multiply поверх жёлтой подложки красит светлое в жёлтый и не трогает тёмное —
+         в отличие от filter, которому нужен точный исходный оттенок */
+      mix-blend-mode:multiply;}
+    .ym-live{background:var(--ym-tint,#fefd09);}
+    @media (prefers-reduced-motion:reduce){.ym-live{transition:none}}
+
+    /* подсказка первого захода */
+    .ym-hint,.ym-arrow{position:absolute;z-index:5;pointer-events:none;opacity:0;transition:opacity .45s ease;}
+    .ym-hint.is-on,.ym-arrow.is-on{opacity:1;}
+    .ym-arrow{color:#fefd09;overflow:visible;
+      filter:drop-shadow(0 1px 2px #000) drop-shadow(0 2px 8px #0009);}
+    /* подложка обязательна: подсказка ложится поверх скриншота, где под ней бывает
+       и светлая обложка, и текст трека — одной тени для читаемости не хватает */
+    /* подсказка ложится поверх скриншота, где под ней бывает и светлая обложка,
+       поэтому читаемость держится на тени, а не на подложке */
+    .ym-hint b{display:block;font-weight:600;font-size:14px;line-height:1.25;color:#fefd09;
+      white-space:nowrap;text-shadow:0 1px 2px #000, 0 0 10px #000c, 0 2px 12px #000c;}
+    @media (prefers-reduced-motion:reduce){.ym-hint,.ym-arrow{transition:none}}
 </style>
 </head>
 <body>
@@ -390,14 +421,19 @@
           <p class="feature-label"><span>Плеер</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2><span class="text-line">Твой трек.</span> <span class="text-line">В один клик.</span></h2><p><span class="text-line">Обложка, перемотка, лайк и громкость.</span><br><span class="text-line">Всё рядом, чем бы ты ни занимался.</span></p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-1-player-enhanced.png" alt="Плеер Яндекс Музыки: Oblivion — Orion White, обложка, перемотка, лайк и громкость" width="1046" height="1504"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-1-player-enhanced.png" alt="Плеер Яндекс Музыки: Oblivion — Orion White, обложка, перемотка, лайк и громкость" width="1046" height="1504">
+<!-- метка места кнопки на скриншоте: живёт внутри .shot и потому едет вместе с ним -->
+<i class="ym-anchor" style="--cx:50.29%;--cy:94.02%;--d:11.09%;--ym-tint:#fefd09"
+   data-ym="https://music.yandex.ru/iframe/album/11093789/track/47226453" aria-hidden="true"></i></div></div>
       </figure>
       <figure class="slide" style="--source-w:963;--crop-x:0;--crop-y:0;--crop-w:963;--crop-h:1633;--aura:#8a3e32" role="group" aria-roledescription="слайд" aria-label="2 из 6: Радио" aria-hidden="true">
         <figcaption class="slide-copy mobile-only">
           <p class="feature-label"><span>Радио</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2>На своей волне.</h2><p>Станция и трек, который сейчас в эфире.<br>Плеер сам узнает, что ты слушаешь.</p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-2-radio-enhanced.png" alt="Радио ROCK FM: в блоке «Сейчас в эфире» трек Supermassive Black Hole группы Muse" width="963" height="1633"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-2-radio-enhanced.png" alt="Радио ROCK FM: в блоке «Сейчас в эфире» трек Supermassive Black Hole группы Muse" width="963" height="1633">
+<i class="ym-anchor" style="--cx:50.16%;--cy:93.85%;--d:11.32%;--ym-tint:#fefd06"
+   data-ym="https://music.yandex.ru/iframe/album/50058" aria-hidden="true"></i></div></div>
       </figure>
       <figure class="slide" style="--source-w:1960;--crop-x:0;--crop-y:0;--crop-w:1960;--crop-h:1270;--aura:#827657" role="group" aria-roledescription="слайд" aria-label="3 из 6: Настройки" aria-hidden="true">
         <figcaption class="slide-copy mobile-only">
@@ -411,7 +447,9 @@
           <p class="feature-label"><span>ИИ-музыка</span><span class="equalizer" aria-hidden="true"><b></b><b></b><b></b><b></b></span></p>
           <h2>Знай, что слушаешь.</h2><p>Метка ИИ рядом с именем артиста.<br>Пропускай такие треки или оставляй играть.</p>
         </figcaption>
-        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-4-ai-enhanced.png" alt="Плеер с треком Fluxlisimo: красные метки ИИ у названия трека и имени артиста" width="1031" height="1525"></div></div>
+        <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-4-ai-enhanced.png" alt="Плеер с треком Fluxlisimo: красные метки ИИ у названия трека и имени артиста" width="1031" height="1525">
+<i class="ym-anchor" style="--cx:50.92%;--cy:94.1%;--d:11.54%;--ym-tint:#fefa03"
+   data-ym="https://music.yandex.ru/iframe/album/39894877/track/146524317" aria-hidden="true"></i></div></div>
       </figure>
       <figure class="slide" style="--source-w:1207;--crop-x:8;--crop-y:4;--crop-w:1191;--crop-h:1292;--aura:#506478" role="group" aria-roledescription="слайд" aria-label="5 из 6: Для стримов" aria-hidden="true">
         <figcaption class="slide-copy mobile-only">
@@ -428,8 +466,26 @@
         <div class="visual"><div class="shot"><img src="assets/screenshots/screenshot-6-lastfm-updated.png" alt="Настройки Last.fm: подключённый аккаунт, очередь отправки и подмена имён" width="1480" height="1032"></div></div>
       </figure>
     </div>
+    <!-- Один живой плеер на всю карусель: он переезжает к активному слайду и меняет
+         адрес трека. Три отдельных фрейма означали бы три загруженных виджета сразу.
+         Лежит вне .slides, потому что у карточки слайда стоит rotate(), а тап по
+         кросс-origin фрейму с повёрнутым владельцем до него не доезжает. -->
+    <div class="ym-live" hidden>
+      <iframe title="Слушать на Яндекс Музыке" allow="autoplay; encrypted-media"
+              width="64" height="64" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
 
   </div>
+  <!-- Подсказка первого захода живёт вне .frame: у того overflow:hidden, и на узких
+       десктопных ширинах (761–1000 px) плашке слева от карточки не хватает места —
+       её срезало на 60 px, оставляя от текста хвост. Стрелка не нарисована заранее:
+       её путь считается от плашки к кнопке, иначе она указывала бы мимо. -->
+  <div class="ym-hint" hidden aria-hidden="true"><b>Попробуй,<br>нажми</b></div>
+  <svg class="ym-arrow" hidden aria-hidden="true" fill="none" stroke="currentColor"
+       stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path class="ym-arrow-line"/>
+    <path class="ym-arrow-tip"/>
+  </svg>
   <div class="carousel-controls" id="features">
     <button class="arrow prev" type="button" aria-label="Предыдущий слайд">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 5-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -511,6 +567,284 @@
   gallery.addEventListener('touchcancel', function(){touch = null;}, {passive:true});
   show(0, false);
 })();
+</script>
+
+<script>
+  // Живая кнопка воспроизведения поверх нарисованной на скриншоте.
+  //
+  // Виджет Яндекс Музыки в режиме display=yandex-go рисует ровно один круг 32x32
+  // по центру кадра 64x64 — фрейм не обрезается, а масштабируется под круг.
+  // Фрейм один на всю карусель: он переезжает к активному слайду и меняет адрес.
+  (() => {
+    const live = document.querySelector('.ym-live');
+    const frame = live && live.querySelector('iframe');
+    const hint = document.querySelector('.ym-hint');
+    const arrow = document.querySelector('.ym-arrow');
+    if (!live || !frame) return;
+
+    const HINT_KEY = 'ym-hint-seen';
+    const seen = () => { try { return localStorage.getItem(HINT_KEY) === '1'; } catch (e) { return false; } };
+    const remember = () => { try { localStorage.setItem(HINT_KEY, '1'); } catch (e) {} };
+    let hintTimer = 0;
+
+    const hideHint = (forever) => {
+      if (!hint) return;
+      clearTimeout(hintTimer);
+      hint.classList.remove('is-on');
+      hint.hidden = true;
+      if (arrow) { arrow.classList.remove('is-on'); arrow.hidden = true; }
+      if (forever) remember();
+    };
+
+    const BLANK = 'about:blank';
+    let current = null;
+    let timer = 0;
+    let safety = 0;
+
+    // Считать left/top как «центр метки минус угол родителя» нельзя: между
+    // layout-координатами и экранными у карусели стоит масштаб (.shot scale .95,
+    // переходы слайдов), и кнопка уезжала на несколько пикселей. Поэтому цена
+    // одного px в left/top измеряется на месте — двумя пробными сдвигами.
+    const place = () => {
+      if (!current || live.hidden) return;
+      const a = current.getBoundingClientRect();
+      if (!a.width) return;
+      // bbox повёрнутого квадрата шире самого круга — снимаем угол с матрицы .shot
+      const m = new DOMMatrixReadOnly(getComputedStyle(current.parentElement).transform);
+      const angle = Math.atan2(m.b, m.a);
+      const d = a.width / (Math.abs(Math.cos(angle)) + Math.abs(Math.sin(angle)));
+      live.style.width = live.style.height = d + 'px';
+      live.style.setProperty('--ym-scale', (d / 32).toFixed(4));
+
+      live.style.left = '0px';
+      live.style.top = '0px';
+      const zero = live.getBoundingClientRect();
+      live.style.left = '100px';
+      live.style.top = '100px';
+      const hundred = live.getBoundingClientRect();
+      const kx = (hundred.x - zero.x) / 100 || 1;
+      const ky = (hundred.y - zero.y) / 100 || 1;
+      live.style.left = ((a.x + a.width / 2 - (zero.x + zero.width / 2)) / kx) + 'px';
+      live.style.top = ((a.y + a.height / 2 - (zero.y + zero.height / 2)) / ky) + 'px';
+
+      if (hint && !hint.hidden) placeHint(a, d);
+    };
+
+    // Плашка стоит слева от карточки, а стрелка тянется от неё к кнопке: её путь
+    // считается каждый раз, потому что расстояние зависит от ширины экрана.
+    // Подсказка и стрелка лежат в другом контейнере, чем кнопка, поэтому у каждой
+    // своя точка отсчёта: её тоже измеряем на месте — двумя пробными сдвигами.
+    const calibrate = (el) => {
+      const left = el.style.left;
+      const top = el.style.top;
+      el.style.left = '0px';
+      el.style.top = '0px';
+      const zero = el.getBoundingClientRect();
+      el.style.left = '100px';
+      el.style.top = '100px';
+      const hundred = el.getBoundingClientRect();
+      el.style.left = left;
+      el.style.top = top;
+      return { x0: zero.x, y0: zero.y, kx: (hundred.x - zero.x) / 100 || 1, ky: (hundred.y - zero.y) / 100 || 1 };
+    };
+
+    const placeHint = (a, d) => {
+      const shot = current.parentElement;
+      const card = shot.getBoundingClientRect();
+      const box = hint.getBoundingClientRect();
+      const cx = a.x + a.width / 2;
+      const cy = a.y + a.height / 2;
+
+      // экранные координаты плашки: справа от неё — край карточки, по высоте — её низ.
+      // В мобильной раскладке (тот же брейкпоинт, что у вёрстки лендинга) карточка
+      // почти во всю ширину, и плашке слева тесно — сдвигаем её ближе к обложке.
+      const narrow = matchMedia('(max-width: 760px)').matches;
+      const minLeft = narrow ? 28 : 8;
+      let hintRight = card.x - 14;
+      const hintTop = card.y + card.height * 0.52;
+      if (hintRight - box.width < minLeft) hintRight = minLeft + box.width;
+
+      const hb = calibrate(hint);
+      hint.style.left = ((hintRight - box.width - hb.x0) / hb.kx) + 'px';
+      hint.style.top = ((hintTop - hb.y0) / hb.ky) + 'px';
+
+      if (!arrow) return;
+      const start = startPoint();
+      const sx = start.x;
+      const sy = start.y;
+
+      // Стрелка должна втыкаться в центр кнопки. Для квадратичной кривой касательная
+      // в конце — это E − Q, поэтому конец и контрольная точка ставятся на один луч,
+      // идущий из центра: тогда остриё смотрит ровно в центр, а не мимо по хорде.
+      const len = Math.hypot(cx - sx, cy - sy) || 1;
+      const bx = (cx - sx) / len;
+      const by = (cy - sy) / len;
+      const beta = 0.45;                       // наклон входа — от него и берётся дуга
+      const ux = bx * Math.cos(beta) - by * Math.sin(beta);
+      const uy = bx * Math.sin(beta) + by * Math.cos(beta);
+      const reach = d * 0.5 + 7;               // остриё не доходит до кнопки на пару пикселей
+      const ex = cx - ux * reach;
+      const ey = cy - uy * reach;
+      const pull = Math.min(len * 0.45, 130);
+      const qx = ex - ux * pull;
+      const qy = ey - uy * pull;
+
+      // размер svg — по самой кривой, с запасом на толщину линии и наконечник
+      const pad = 24;
+      const left = Math.min(sx, ex, qx) - pad;
+      const topEdge = Math.min(sy, ey, qy) - pad;
+      const width = Math.max(sx, ex, qx) - left + pad;
+      const height = Math.max(sy, ey, qy) - topEdge + pad;
+      const ab = calibrate(arrow);
+      arrow.style.left = ((left - ab.x0) / ab.kx) + 'px';
+      arrow.style.top = ((topEdge - ab.y0) / ab.ky) + 'px';
+      arrow.style.width = width + 'px';
+      arrow.style.height = height + 'px';
+      arrow.setAttribute('viewBox', `0 0 ${width.toFixed(1)} ${height.toFixed(1)}`);
+      const P = (x, y) => `${(x - left).toFixed(1)},${(y - topEdge).toFixed(1)}`;
+      arrow.querySelector('.ym-arrow-line').setAttribute('d', `M${P(sx, sy)} Q${P(qx, qy)} ${P(ex, ey)}`);
+
+      // наконечник — по той же касательной, что и вход в центр
+      const wing = Math.max(9, d * 0.42);
+      const spread = 0.55;
+      const w1x = ex - (ux * Math.cos(spread) - uy * Math.sin(spread)) * wing;
+      const w1y = ey - (ux * Math.sin(spread) + uy * Math.cos(spread)) * wing;
+      const w2x = ex - (ux * Math.cos(-spread) - uy * Math.sin(-spread)) * wing;
+      const w2y = ey - (ux * Math.sin(-spread) + uy * Math.cos(-spread)) * wing;
+      arrow.querySelector('.ym-arrow-tip').setAttribute('d', `M${P(w1x, w1y)} L${P(ex, ey)} L${P(w2x, w2y)}`);
+    };
+
+    // Стрелка выходит из-под буквы «у» первой строки на высоте центра второй —
+    // положение снимается с самого текста, чтобы не разъезжаться при смене шрифта.
+    const startPoint = () => {
+      const b = hint.querySelector('b');
+      const lines = [...b.childNodes].filter((n) => n.nodeType === 3);
+      const box = b.getBoundingClientRect();
+      if (!lines.length) return { x: box.x + box.width * 0.75, y: box.bottom };
+      const range = document.createRange();
+      let x = box.x + box.width * 0.75;
+      const i = lines[0].textContent.indexOf('у');
+      if (i >= 0) {
+        range.setStart(lines[0], i);
+        range.setEnd(lines[0], i + 1);
+        const r = range.getBoundingClientRect();
+        if (r.width) x = r.x + r.width / 2;
+      }
+      range.selectNodeContents(lines[1] || lines[0]);
+      const second = range.getBoundingClientRect();
+      return { x, y: second.height ? second.y + second.height / 2 : box.bottom };
+    };
+
+    const sync = () => {
+      const slide = document.querySelector('.slide.active');
+      const anchor = slide && slide.querySelector('.ym-anchor');
+      if (!anchor) {
+        live.hidden = true;
+        live.classList.remove('is-ready');
+        current = null;
+        clearTimeout(timer);
+        clearTimeout(safety);
+        hideHint(false);
+        // Спрятать мало: скрытый фрейм продолжает играть, и музыка звучит на слайде,
+        // где плеера нет вовсе. Остановить его снаружи нечем — фрейм чужого origin,
+        // а postMessage-протокол в режиме yandex-go не отвечает. Поэтому выгружаем
+        // документ; при возвращении на слайд с меткой он загрузится заново.
+        if (frame.getAttribute('src') !== BLANK) frame.setAttribute('src', BLANK);
+        return;
+      }
+      if (anchor !== current) {
+        if (current) hideHint(false);  // ушли со слайда — прячем, но не отмечаем
+        current = anchor;
+        live.hidden = false;
+        live.classList.remove('is-ready');   // виджет секунду рисует себя — не показываем сборку
+        live.style.setProperty('--ym-tint', getComputedStyle(anchor).getPropertyValue('--ym-tint').trim() || '#fefd09');
+        const src = anchor.dataset.ym + '?display=yandex-go';
+        if (frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+        clearTimeout(timer);
+        timer = setTimeout(reveal, 3000);    // страховка, если load не придёт
+      }
+      place();
+    };
+
+    // Слайд едет ~0.85 с. Показать кнопку раньше — значит показать её в промежуточной
+    // точке и дёрнуть в конечную. Поэтому ждём, пока метка перестанет двигаться.
+    const reveal = () => {
+      const started = performance.now();
+      let last = '';
+      let stable = 0;
+      // в фоновой вкладке requestAnimationFrame не тикает вовсе — замерено:
+      // кнопка так и оставалась прозрачной, пока вкладку не покажут
+      clearTimeout(safety);
+      safety = setTimeout(() => { if (!current || live.hidden) return; place(); live.classList.add('is-ready'); showHint(); }, 2500);
+      const tick = () => {
+        if (!current || live.hidden) return;
+        place();
+        const r = current.getBoundingClientRect();
+        const key = Math.round(r.x) + ',' + Math.round(r.y) + ',' + Math.round(r.width);
+        stable = key === last ? stable + 1 : 0;
+        last = key;
+        if (stable >= 3 || performance.now() - started > 2500) {
+          clearTimeout(safety);
+          live.classList.add('is-ready');
+          showHint();
+          return;
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    frame.addEventListener('load', () => {
+      clearTimeout(timer);
+      if (!current || live.hidden || frame.getAttribute('src') === BLANK) return;
+      timer = setTimeout(reveal, 700);       // load приходит до того, как виджет отрисован
+    });
+
+    // Подсказка первого захода: один раз за браузер, только на первом слайде,
+    // и только когда кнопка уже стоит на месте — иначе стрелка укажет в пустоту.
+    const showHint = () => {
+      if (!hint || seen() || hint.classList.contains('is-on')) return;
+      if (!current || live.hidden) return;
+      // подсказка живёт на первом слайде: с него начинается просмотр, и туда же
+      // человек возвращается, если пролистал карусель и не понял, что кнопка живая
+      if (current.closest('.slide') !== document.querySelector('.slide')) return;
+      // Нажатие ловится по уходу фокуса в iframe. Если фокус уже там (человек нажимал
+      // кнопку на другом слайде), повторного blur не будет и нажатие потеряется —
+      // поэтому перед показом фокус возвращается на страницу.
+      if (document.activeElement === frame) frame.blur();
+      hint.hidden = false;
+      if (arrow) arrow.hidden = false;
+      place();
+      clearTimeout(hintTimer);
+      hintTimer = setTimeout(() => {
+        place();
+        hint.classList.add('is-on');
+        if (arrow) arrow.classList.add('is-on');
+      }, 900);
+    };
+
+    // Клик внутри чужого фрейма со страницы не виден. Но фокус при нажатии уходит
+    // в сам iframe — по этому и понимаем, что кнопку нажали. Это единственное
+    // место, где подсказка отмечается показанной навсегда: неважно, на каком
+    // слайде нажали — человек уже понял, что кнопка живая.
+    addEventListener('blur', () => {
+      if (document.activeElement === frame) hideHint(true);
+    }, true);
+    // Прокрутка и клавиши подсказку не трогают: к карусели ещё надо доскроллить,
+    // и гасить её по дороге незачем. Клик мимо прячет её на время, а насовсем
+    // отмечает только нажатие самой кнопки — иначе случайный клик по странице
+    // лишил бы человека единственной подсказки.
+    addEventListener('pointerdown', () => hideHint(false), { passive: true });
+
+    const slides = document.getElementById('slides');
+    if (slides) new MutationObserver(sync).observe(slides, { attributes: true, attributeFilter: ['class'], subtree: true });
+    for (const anchor of document.querySelectorAll('.ym-anchor')) {
+      new ResizeObserver(place).observe(anchor.parentElement);
+      anchor.parentElement.addEventListener('transitionend', place);
+    }
+    addEventListener('resize', place);
+    sync();
+  })();
 </script>
 </body>
 </html>
